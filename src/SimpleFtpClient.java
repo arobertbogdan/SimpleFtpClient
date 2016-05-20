@@ -73,7 +73,7 @@ public class SimpleFtpClient {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 466, 490);
+		frame.setBounds(100, 100, 600, 490);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -101,12 +101,12 @@ public class SimpleFtpClient {
 		frame.getContentPane().add(lblNewLabel_1);
 		
 		JTextPane ftpanel = new JTextPane();
-		ftpanel.setBounds(26, 127, 394, 255);
+		ftpanel.setBounds(26, 127, 520, 255);
 		frame.getContentPane().add(ftpanel);
 		
 		JScrollPane scrollPane = new JScrollPane(ftpanel);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setBounds(26, 127, 394, 255);
+		scrollPane.setBounds(26, 127, 520, 255);
 		frame.getContentPane().add(scrollPane);
 		
 		final StyledDocument doc = ftpanel.getStyledDocument();
@@ -197,8 +197,28 @@ public class SimpleFtpClient {
 			case "DELE":
 				deleCommand(cmd, socket, doc);
 				break;
+			case "CWD":
+				cwdCommand(cmd, socket, doc);
+				break;
+			case "PWD" :
+				pwdCommand(cmd, socket, doc);
+				break;
 			default:break;
 		}
+	}
+	
+	private void cwdCommand(Command cmd, Socket socket, StyledDocument doc){
+		Response res = new Response(doc);
+		
+		cmd.Send(out);
+		res.Recv(in);
+	}
+	
+	private void pwdCommand(Command cmd, Socket socket, StyledDocument doc){
+		Response res = new Response(doc);
+		
+		cmd.Send(out);
+		res.Recv(in);
 	}
 	
 	private void connectUser(String username, String password, Socket socket, StyledDocument doc){

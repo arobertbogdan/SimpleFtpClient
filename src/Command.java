@@ -59,6 +59,8 @@ public class Command {
 		if (matcher.find()) {
 			command = stream.substring(0, matcher.start());
 			argument = stream.substring(matcher.end());
+		}else{
+			command = stream;
 		}
 		
 	}
